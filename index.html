@@ -3,270 +3,903 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mistri, Maan Jao Na... 🥺✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <title>Mistri, Maan Jao Na... 🥺💖</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display, Dancing Script & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        script: ['"Dancing Script"', 'cursive'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        plum: '#4a154b',
+                        rosegold: '#e11d48',
+                        warmgold: '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root {
-            --primary: #ff6584;
-            --primary-dark: #e04f6d;
-            --secondary: #9c88ff;
-            --accent: #ffd32a;
-            --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --text-main: #2d3436;
-            --text-light: #636e72;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --border-radius: 20px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        /* Warm Dreamy Sunset-Rose, Soft Lavender & Blush-Gold Background */
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #fff0f3 0%, #f3e7e8 50%, #e8e4f3 100%);
-            color: var(--text-main);
+            background: linear-gradient(135deg, #fff5f7 0%, #fce7f3 38%, #f3e8ff 72%, #fdf2f8 100%);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            color: #4a154b;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Floating background decoration */
-        .floating-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -1;
+        /* Soft Frosted Blush Glass Card */
+        .blush-card {
+            background: rgba(255, 255, 255, 0.84);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1.5px solid rgba(244, 114, 182, 0.28);
+            box-shadow: 0 20px 50px -12px rgba(74, 21, 75, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        /* Rose-Gold Gradient Text */
+        .rose-gold-text {
+            background: linear-gradient(135deg, #be123c 0%, #e11d48 45%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Floating Ambient Hearts & Sparkles */
+        @keyframes floatUpSlow {
+            0% { transform: translateY(0) scale(0.9) rotate(-6deg); opacity: 0; }
+            20% { opacity: 0.65; }
+            80% { opacity: 0.55; }
+            100% { transform: translateY(-110vh) scale(1.15) rotate(8deg); opacity: 0; }
+        }
+        .ambient-heart {
+            position: fixed;
+            bottom: -40px;
             pointer-events: none;
+            z-index: 0;
+            animation: floatUpSlow linear infinite;
         }
 
-        .float-item {
-            position: absolute;
-            font-size: 24px;
-            opacity: 0.25;
-            animation: floatUp 12s infinite linear;
+        @keyframes gentleBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.04); }
+        }
+        .animate-cute-bounce {
+            animation: gentleBounce 2.6s ease-in-out infinite;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.3; }
-            80% { opacity: 0.3; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* Navigation Header */
-        header {
-            width: 100%;
-            max-width: 800px;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .logo {
-            font-family: 'Dancing Script', cursive;
-            font-size: 28px;
-            color: var(--primary-dark);
-            font-weight: 700;
-        }
-
-        .nav-dots {
-            display: flex;
-            gap: 10px;
-        }
-
-        .nav-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #dcdde1;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .nav-dot.active {
-            background: var(--primary);
-            transform: scale(1.2);
-            box-shadow: 0 0 10px rgba(255, 101, 132, 0.5);
-        }
-
-        /* Main Container */
-        .container {
-            width: 100%;
-            max-width: 750px;
-            padding: 10px 20px 80px 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        /* Page System */
-        .page {
+        /* Smooth Page View Transition */
+        .page-view {
             display: none;
-            width: 100%;
-            animation: fadeIn 0.5s ease forwards;
-            text-align: center;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .page-view.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .page.active {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Cards & Containers */
-        .card-box {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: var(--border-radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            width: 100%;
-            margin-bottom: 25px;
-        }
-
-        h1 {
-            font-size: 32px;
-            color: #d63031;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        h2 {
-            font-size: 24px;
-            color: #2d3436;
-            margin-bottom: 15px;
-        }
-
-        p {
-            font-size: 16px;
-            color: var(--text-light);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        /* PAGE 1: Narazgi Meter */
-        .mood-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        .mood-btn {
-            background: white;
-            border: 2px solid #ff7675;
-            padding: 15px;
-            border-radius: 15px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            color: #d63031;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        }
-
-        .mood-btn:hover, .mood-btn.selected {
-            background: #ff7675;
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 118, 117, 0.3);
-        }
-
-        .reaction-box {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 12px;
-            border-left: 5px solid var(--primary);
-            font-style: italic;
-            color: #4b6584;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* PAGE 2: Flip Cards */
-        .flip-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            width: 100%;
-        }
-
+        /* 3D Flip Cards for Page 2 */
         .flip-card {
-            background-color: transparent;
-            height: 160px;
-            perspective: 1000px;
-            cursor: pointer;
+            perspective: 1100px;
+            height: 235px;
         }
-
         .flip-card-inner {
             position: relative;
             width: 100%;
             height: 100%;
             text-align: center;
-            transition: transform 0.6s;
+            transition: transform 0.72s cubic-bezier(0.4, 0.2, 0.2, 1);
             transform-style: preserve-3d;
-            border-radius: 16px;
-            box-shadow: var(--shadow);
         }
-
-        .flip-card.flipped .flip-card-inner {
+        .flip-card.flipped .flip-card-inner,
+        .flip-card:hover .flip-card-inner {
             transform: rotateY(180deg);
         }
-
         .flip-card-front, .flip-card-back {
             position: absolute;
             width: 100%;
             height: 100%;
+            -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            border-radius: 16px;
+            border-radius: 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            border: 1px solid rgba(255,255,255,0.8);
+            padding: 1.5rem;
         }
-
-        .flip-card-front {
-            background: linear-gradient(135deg, #fff 0%, #fff5f7 100%);
-            color: var(--text-main);
-        }
-
-        .flip-card-front span {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .flip-card-front h3 {
-            font-size: 16px;
-            color: var(--primary-dark);
-        }
-
         .flip-card-back {
-            background: linear-gradient(135deg, var(--primary) 0%, #ff8da1 100%);
-            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* Coupon Ticket Perforated Edge & Claim Stamp */
+        .coupon-card {
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .coupon-card.claimed {
+            background: linear-gradient(135deg, #fff1f2 0%, #fef3c7 100%);
+            border-color: #e11d48;
+            box-shadow: 0 12px 28px -8px rgba(225, 29, 72, 0.22);
+        }
+        @keyframes stampPop {
+            0% { transform: scale(2) rotate(-25deg); opacity: 0; }
+            70% { transform: scale(0.92) rotate(-10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(-12deg); opacity: 1; }
+        }
+        .stamp-badge {
+            animation: stampPop 0.35s ease-out forwards;
+        }
+
+        /* Dodging No Button Smooth Spring */
+        #noBtn {
+            transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-rose-200 selection:text-plum pb-28 sm:pb-16">
+
+    <!-- Floating Ambient Hearts & Glow Orbs -->
+    <div id="ambientLayer" class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+        <div class="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-rose-200/45 blur-3xl"></div>
+        <div class="absolute top-1/3 -right-24 w-96 h-96 rounded-full bg-purple-200/45 blur-3xl"></div>
+        <div class="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-amber-100/60 blur-3xl"></div>
+    </div>
+
+    <!-- Top Sticky Header & 4-Page Pill Navigation -->
+    <header class="sticky top-0 z-30 backdrop-blur-lg bg-white/75 border-b border-rose-200/70 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+            <!-- Title Logo -->
+            <button onclick="switchPage(1)" class="flex items-center gap-2.5 text-left cursor-pointer group">
+                <span class="w-9 h-9 rounded-full bg-gradient-to-tr from-rose-600 via-pink-500 to-amber-400 text-white flex items-center justify-center font-script font-bold text-xl shadow-md">M</span>
+                <div>
+                    <span class="font-serif font-bold text-base sm:text-lg text-plum group-hover:text-rose-600 transition">For Mistri</span>
+                    <span class="hidden sm:inline-block text-xs text-rose-700 font-semibold ml-2 bg-rose-100 px-2.5 py-0.5 rounded-full border border-rose-200">Peace Offering 🕊️</span>
+                </div>
+            </button>
+
+            <!-- Desktop 4-Tab Navigation -->
+            <nav aria-label="Apology Pages Desktop" class="hidden md:flex items-center bg-rose-50/90 p-1 rounded-full border border-rose-200 shadow-inner gap-1">
+                <button id="top-nav-1" onclick="switchPage(1)" class="px-3.5 py-1.5 rounded-full text-xs lg:text-sm font-semibold transition-all duration-200 bg-gradient-to-r from-rose-600 to-pink-500 text-white shadow cursor-pointer">
+                    1. Mistri Suno Na
+                </button>
+                <button id="top-nav-2" onclick="switchPage(2)" class="px-3.5 py-1.5 rounded-full text-xs lg:text-sm font-semibold transition-all duration-200 text-plum/75 hover:text-rose-600 cursor-pointer">
+                    2. Sorry & Reasons
+                </button>
+                <button id="top-nav-3" onclick="switchPage(3)" class="px-3.5 py-1.5 rounded-full text-xs lg:text-sm font-semibold transition-all duration-200 text-plum/75 hover:text-rose-600 cursor-pointer">
+                    3. Little Promises
+                </button>
+                <button id="top-nav-4" onclick="switchPage(4)" class="px-3.5 py-1.5 rounded-full text-xs lg:text-sm font-semibold transition-all duration-200 text-plum/75 hover:text-rose-600 cursor-pointer">
+                    4. Maan Jao Na
+                </button>
+            </nav>
+
+            <!-- Gentle Chime Button -->
+            <button onclick="playSoftChime()" title="Play a soft melody" class="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-700 hover:text-rose-900 bg-rose-100/80 hover:bg-rose-200/70 px-3 py-1.5 rounded-full border border-rose-200 transition cursor-pointer">
+                <span>🎶</span>
+                <span class="hidden sm:inline">Soft Tune</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main 4-Page Container -->
+    <main class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-8">
+
+        <!-- ========================================================= -->
+        <!-- PAGE 1: MISTRI SUNO NA (THE CUTE OPENING & MOOD METER)    -->
+        <!-- ========================================================= -->
+        <div id="page-1" class="page-view active">
+            <!-- Expressive Header -->
+            <div class="text-center mb-7 sm:mb-9">
+                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-rose-100/90 border border-rose-200 text-rose-700 text-xs font-bold tracking-wider uppercase mb-3">
+                    <span>🥺</span>
+                    <span>Dil Ki Baat • Please Read</span>
+                    <span>✨</span>
+                </div>
+                <h1 class="font-serif text-4xl sm:text-6xl font-bold tracking-tight rose-gold-text leading-tight">
+                    Mistri, Maan Jao Na... 🥺✨
+                </h1>
+                <p class="mt-3 text-plum/85 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+                    I know you're upset, and honestly, the whole day feels incomplete without your smile.
+                </p>
+            </div>
+
+            <!-- Interactive Current Narazgi (Anger) Meter Card -->
+            <section class="blush-card rounded-3xl p-6 sm:p-10 text-center">
+                <div class="inline-block px-3.5 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold uppercase tracking-wider mb-4">
+                    Live Mood Check 🌡️
+                </div>
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-plum mb-1">
+                    Abhi Kitni Narazgi Hai?
+                </h2>
+                <p class="text-plum/70 text-sm mb-6">
+                    Tap your current mood level below so I know how much extra manana padega!
+                </p>
+
+                <!-- Animated Reaction Display Card -->
+                <div id="moodReactionBox" class="max-w-lg mx-auto rounded-2xl bg-gradient-to-br from-rose-50 via-pink-50 to-amber-50 border-2 border-rose-200/80 p-6 sm:p-7 mb-7 shadow-inner transition-all duration-300">
+                    <div id="moodEmoji" class="text-6xl sm:text-7xl mb-3 animate-cute-bounce select-none">😤</div>
+                    <h3 id="moodTitle" class="font-serif text-xl sm:text-2xl font-bold text-rose-700 mb-2">
+                        100% Gussa Mode On!
+                    </h3>
+                    <p id="moodResponse" class="text-plum/90 text-sm sm:text-base leading-relaxed">
+                        "Haye! Itna tez gussa bhi cute lagta hai, par please thoda sa toh pighal jao na Mistri... I'm genuinely sorry! 🥺"
+                    </p>
+                </div>
+
+                <!-- 4 Clickable Mood Buttons -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto mb-8">
+                    <button onclick="setMood(0)" id="mood-btn-0" class="mood-btn p-3.5 rounded-2xl border-2 border-rose-500 bg-rose-50 text-plum font-bold text-sm shadow-sm transition cursor-pointer flex items-center justify-center gap-2">
+                        <span>100% Gussa 😤</span>
+                    </button>
+                    <button onclick="setMood(1)" id="mood-btn-1" class="mood-btn p-3.5 rounded-2xl border-2 border-rose-200 bg-white/80 hover:border-rose-400 text-plum font-semibold text-sm transition cursor-pointer flex items-center justify-center gap-2">
+                        <span>Thoda Sa Pighal Gayi 🫠</span>
+                    </button>
+                    <button onclick="setMood(2)" id="mood-btn-2" class="mood-btn p-3.5 rounded-2xl border-2 border-rose-200 bg-white/80 hover:border-rose-400 text-plum font-semibold text-sm transition cursor-pointer flex items-center justify-center gap-2">
+                        <span>Chalo Sochte Hain 🤔</span>
+                    </button>
+                    <button onclick="setMood(3)" id="mood-btn-3" class="mood-btn p-3.5 rounded-2xl border-2 border-rose-200 bg-white/80 hover:border-rose-400 text-plum font-semibold text-sm transition cursor-pointer flex items-center justify-center gap-2">
+                        <span>Maan Gayi! 😊</span>
+                    </button>
+                </div>
+
+                <!-- Next Page Encouragement CTA -->
+                <div class="pt-2 border-t border-rose-200/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <p class="text-xs sm:text-sm text-plum/75 italic font-serif">
+                        Abhi aage aur bhi kuch likha hai tumhare liye...
+                    </p>
+                    <button onclick="switchPage(2)" class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-rose-600 via-pink-500 to-amber-500 text-white font-bold text-sm sm:text-base shadow-lg shadow-rose-500/25 hover:scale-105 active:scale-95 transition-transform cursor-pointer">
+                        Next Page →
+                    </button>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ========================================================= -->
+        <!-- PAGE 2: DIL SE SORRY & WHY YOU MEAN SO MUCH               -->
+        <!-- ========================================================= -->
+        <div id="page-2" class="page-view">
+            <!-- Header -->
+            <div class="text-center mb-7 sm:mb-9">
+                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-purple-100/90 border border-purple-200 text-plum text-xs font-bold tracking-wider uppercase mb-3">
+                    <span>🤍</span>
+                    <span>Chapter II • Dil Se Apology</span>
+                    <span>🌸</span>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold rose-gold-text leading-tight">
+                    Galti Meri Thi, Par Tumhari Khushi Sabse Zaroori Hai
+                </h2>
+                <p class="mt-2.5 text-plum/75 text-sm sm:text-base">
+                    Tap or hover each card to read what's truly in my heart ↻
+                </p>
+            </div>
+
+            <!-- 4 Interactive 3D Flip Cards -->
+            <section class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+                <!-- Card 1: Dil Se Maafi -->
+                <div onclick="this.classList.toggle('flipped')" class="flip-card cursor-pointer">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front blush-card border-rose-200">
+                            <div class="w-14 h-14 rounded-2xl bg-rose-100 border border-rose-200 flex items-center justify-center text-3xl mb-3">🥺</div>
+                            <h3 class="font-serif font-bold text-2xl text-plum">Dil Se Maafi 🥺</h3>
+                            <span class="text-xs text-rose-600 font-semibold mt-2 bg-rose-50 px-3 py-1 rounded-full">Tap to reveal ↻</span>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-rose-600 to-pink-600 text-white shadow-xl">
+                            <span class="text-2xl mb-2">🥺</span>
+                            <p class="font-serif italic text-base sm:text-lg leading-relaxed">
+                                "I never meant to hurt your feelings. You deserve all the patience and care in the world."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Tumhari Smile -->
+                <div onclick="this.classList.toggle('flipped')" class="flip-card cursor-pointer">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front blush-card border-amber-200">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-100 border border-amber-200 flex items-center justify-center text-3xl mb-3">✨</div>
+                            <h3 class="font-serif font-bold text-2xl text-plum">Tumhari Smile ✨</h3>
+                            <span class="text-xs text-amber-700 font-semibold mt-2 bg-amber-50 px-3 py-1 rounded-full">Tap to reveal ↻</span>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-amber-500 to-rose-500 text-white shadow-xl">
+                            <span class="text-2xl mb-2">✨</span>
+                            <p class="font-serif italic text-base sm:text-lg leading-relaxed">
+                                "Jab tum gussa hoti ho toh sab kuch dull lagta hai. Your smile literally fixes everything."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: No Excuses -->
+                <div onclick="this.classList.toggle('flipped')" class="flip-card cursor-pointer">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front blush-card border-purple-200">
+                            <div class="w-14 h-14 rounded-2xl bg-purple-100 border border-purple-200 flex items-center justify-center text-3xl mb-3">🤍</div>
+                            <h3 class="font-serif font-bold text-2xl text-plum">No Excuses 🤍</h3>
+                            <span class="text-xs text-purple-700 font-semibold mt-2 bg-purple-50 px-3 py-1 rounded-full">Tap to reveal ↻</span>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-plum to-purple-800 text-rose-50 shadow-xl">
+                            <span class="text-2xl mb-2">🤍</span>
+                            <p class="font-serif italic text-base sm:text-lg leading-relaxed">
+                                "No arguments, no excuses—bas tumhara mood theek karna hai aur tumhe phir se haste hue dekhna hai."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: You're Special -->
+                <div onclick="this.classList.toggle('flipped')" class="flip-card cursor-pointer">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front blush-card border-pink-200">
+                            <div class="w-14 h-14 rounded-2xl bg-pink-100 border border-pink-200 flex items-center justify-center text-3xl mb-3">🌸</div>
+                            <h3 class="font-serif font-bold text-2xl text-plum">You're Special 🌸</h3>
+                            <span class="text-xs text-pink-700 font-semibold mt-2 bg-pink-50 px-3 py-1 rounded-full">Tap to reveal ↻</span>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-pink-600 to-rose-700 text-white shadow-xl">
+                            <span class="text-2xl mb-2">🌸</span>
+                            <p class="font-serif italic text-base sm:text-lg leading-relaxed">
+                                "Chahe jitni bhi baat ho jaye, tumhari jagah koi nahi le sakta. You matter way too much to me."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation Footer -->
+            <div class="flex items-center justify-between gap-4">
+                <button onclick="switchPage(1)" class="px-5 py-3 rounded-full bg-white/85 hover:bg-white text-plum font-semibold text-sm border border-rose-200 shadow-sm cursor-pointer">
+                    ← Back
+                </button>
+                <button onclick="switchPage(3)" class="px-7 py-3.5 rounded-full bg-gradient-to-r from-rose-600 via-pink-500 to-amber-500 text-white font-bold text-sm sm:text-base shadow-lg hover:scale-105 transition-transform cursor-pointer">
+                    See My Promises →
+                </button>
+            </div>
+        </div>
+
+
+        <!-- ========================================================= -->
+        <!-- PAGE 3: MERI PAKKI PROMISES & PEACE OFFERINGS             -->
+        <!-- ========================================================= -->
+        <div id="page-3" class="page-view">
+            <!-- Header -->
+            <div class="text-center mb-6 sm:mb-8">
+                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-amber-100/90 border border-amber-200 text-amber-800 text-xs font-bold tracking-wider uppercase mb-3">
+                    <span>🤞</span>
+                    <span>Chapter III • Peace Offerings</span>
+                    <span>🎁</span>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold rose-gold-text leading-tight">
+                    Tumhe Manane Ke Liye Kuch Special Promises 🤞
+                </h2>
+                <p class="mt-2.5 text-plum/80 text-sm sm:text-base">
+                    Tap any coupon below to claim it—100% redeemable immediately!
+                </p>
+            </div>
+
+            <!-- Live Counter Pill -->
+            <div class="flex justify-center mb-6">
+                <div class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white/90 border-2 border-rose-300 shadow-md">
+                    <span class="text-base">🎟️</span>
+                    <span id="treatCounterText" class="font-bold text-sm sm:text-base text-plum">
+                        0/4 Treats Claimed by Mistri
+                    </span>
+                </div>
+            </div>
+
+            <!-- 4 Interactive Peace Offering Coupons -->
+            <section class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-8">
+                <!-- Coupon 1 -->
+                <div onclick="toggleCoupon(this, 0)" class="coupon-card blush-card rounded-3xl p-6 cursor-pointer relative overflow-hidden border-2 border-dashed border-rose-300 hover:border-rose-500">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-rose-600 bg-rose-100/80 px-2.5 py-0.5 rounded-full">Voucher #1</span>
+                            <h3 class="font-serif font-bold text-xl text-plum mt-2">
+                                🍦 Unlimited Ice Cream / Coffee Treat
+                            </h3>
+                            <p class="text-plum/80 text-sm mt-1.5 leading-relaxed">
+                                "Jab bolo, jahan bolo, treat meri taraf se!"
+                            </p>
+                        </div>
+                        <div class="coupon-check w-8 h-8 rounded-full border-2 border-rose-300 flex items-center justify-center text-white font-bold shrink-0 transition">
+                            ✓
+                        </div>
+                    </div>
+                    <div class="coupon-stamp hidden mt-3 inline-block px-3 py-1 rounded-lg border-2 border-rose-600 text-rose-600 font-extrabold text-xs uppercase tracking-widest stamp-badge">
+                        CLAIMED BY MISTRI 💖
+                    </div>
+                </div>
+
+                <!-- Coupon 2 -->
+                <div onclick="toggleCoupon(this, 1)" class="coupon-card blush-card rounded-3xl p-6 cursor-pointer relative overflow-hidden border-2 border-dashed border-rose-300 hover:border-rose-500">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-100/80 px-2.5 py-0.5 rounded-full">Voucher #2</span>
+                            <h3 class="font-serif font-bold text-xl text-plum mt-2">
+                                👂 Full Attention & Zero Excuses
+                            </h3>
+                            <p class="text-plum/80 text-sm mt-1.5 leading-relaxed">
+                                "Tumhari har baat bina beech mein bole sununga."
+                            </p>
+                        </div>
+                        <div class="coupon-check w-8 h-8 rounded-full border-2 border-rose-300 flex items-center justify-center text-white font-bold shrink-0 transition">
+                            ✓
+                        </div>
+                    </div>
+                    <div class="coupon-stamp hidden mt-3 inline-block px-3 py-1 rounded-lg border-2 border-rose-600 text-rose-600 font-extrabold text-xs uppercase tracking-widest stamp-badge">
+                        CLAIMED BY MISTRI 💖
+                    </div>
+                </div>
+
+                <!-- Coupon 3 -->
+                <div onclick="toggleCoupon(this, 2)" class="coupon-card blush-card rounded-3xl p-6 cursor-pointer relative overflow-hidden border-2 border-dashed border-rose-300 hover:border-rose-500">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-100/80 px-2.5 py-0.5 rounded-full">Voucher #3</span>
+                            <h3 class="font-serif font-bold text-xl text-plum mt-2">
+                                🍫 Favorite Chocolates & Momos Date
+                            </h3>
+                            <p class="text-plum/80 text-sm mt-1.5 leading-relaxed">
+                                "Gussa thooko aur apna favorite order batao."
+                            </p>
+                        </div>
+                        <div class="coupon-check w-8 h-8 rounded-full border-2 border-rose-300 flex items-center justify-center text-white font-bold shrink-0 transition">
+                            ✓
+                        </div>
+                    </div>
+                    <div class="coupon-stamp hidden mt-3 inline-block px-3 py-1 rounded-lg border-2 border-rose-600 text-rose-600 font-extrabold text-xs uppercase tracking-widest stamp-badge">
+                        CLAIMED BY MISTRI 💖
+                    </div>
+                </div>
+
+                <!-- Coupon 4 -->
+                <div onclick="toggleCoupon(this, 3)" class="coupon-card blush-card rounded-3xl p-6 cursor-pointer relative overflow-hidden border-2 border-dashed border-rose-300 hover:border-rose-500">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-pink-700 bg-pink-100/80 px-2.5 py-0.5 rounded-full">Voucher #4</span>
+                            <h3 class="font-serif font-bold text-xl text-plum mt-2">
+                                👑 Full Drama & Nakhre Allowed
+                            </h3>
+                            <p class="text-plum/80 text-sm mt-1.5 leading-relaxed">
+                                "Aaj saare nakhre aur gussa bilkul maaf!"
+                            </p>
+                        </div>
+                        <div class="coupon-check w-8 h-8 rounded-full border-2 border-rose-300 flex items-center justify-center text-white font-bold shrink-0 transition">
+                            ✓
+                        </div>
+                    </div>
+                    <div class="coupon-stamp hidden mt-3 inline-block px-3 py-1 rounded-lg border-2 border-rose-600 text-rose-600 font-extrabold text-xs uppercase tracking-widest stamp-badge">
+                        CLAIMED BY MISTRI 💖
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation Footer -->
+            <div class="flex items-center justify-between gap-4">
+                <button onclick="switchPage(2)" class="px-5 py-3 rounded-full bg-white/85 hover:bg-white text-plum font-semibold text-sm border border-rose-200 shadow-sm cursor-pointer">
+                    ← Back
+                </button>
+                <button onclick="switchPage(4)" class="px-7 py-3.5 rounded-full bg-gradient-to-r from-rose-600 via-pink-500 to-amber-500 text-white font-bold text-sm sm:text-base shadow-lg hover:scale-105 transition-transform cursor-pointer">
+                    Final Question →
+                </button>
+            </div>
+        </div>
+
+
+        <!-- ========================================================= -->
+        <!-- PAGE 4: THE FINAL QUESTION — MAAN GAYI NA?                -->
+        <!-- ========================================================= -->
+        <div id="page-4" class="page-view">
+            <!-- Header -->
+            <div class="text-center mb-6 sm:mb-8">
+                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-rose-100 border border-rose-200 text-rose-700 text-xs font-bold tracking-wider uppercase mb-3">
+                    <span>💌</span>
+                    <span>Chapter IV • Dil Se Note</span>
+                    <span>💖</span>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold rose-gold-text">
+                    Bas Ek Choti Si Smile De Do...
+                </h2>
+            </div>
+
+            <!-- Interactive Wax-Seal Envelope Letter -->
+            <section class="blush-card rounded-3xl p-6 sm:p-10 mb-8 text-center">
+                <p id="envelopeInstruction" class="text-plum/75 text-sm mb-5">
+                    Tap the wax seal below to open your personal note 💌
+                </p>
+
+                <!-- Sealed Envelope -->
+                <div id="sealedEnvelope" onclick="unsealNote()" class="max-w-md mx-auto cursor-pointer group">
+                    <div class="relative bg-gradient-to-br from-rose-100 via-pink-50 to-amber-100 border-2 border-rose-300 rounded-2xl p-8 sm:p-10 shadow-xl transition-all duration-300 group-hover:-translate-y-1.5 overflow-hidden">
+                        <!-- Flap Triangle -->
+                        <div class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-rose-300/40 to-transparent" style="clip-path: polygon(0 0, 50% 100%, 100% 0);"></div>
+
+                        <p class="font-serif italic text-plum/75 text-sm mb-4 relative z-10">A little note for</p>
+
+                        <!-- Wax Seal -->
+                        <div class="relative z-10 w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-rose-600 via-pink-600 to-plum border-4 border-amber-200 shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="font-script text-4xl text-amber-100">M</span>
+                        </div>
+
+                        <p class="font-serif font-bold text-2xl text-plum mt-4 relative z-10">Mistri ✨</p>
+                        <span class="inline-block mt-2 text-xs font-bold uppercase tracking-widest text-rose-700 bg-white/90 px-3.5 py-1 rounded-full shadow-sm">
+                            Tap Seal to Unfold
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Unfolded Letter -->
+                <div id="unfoldedLetter" class="hidden max-w-xl mx-auto text-left bg-gradient-to-b from-[#fffdf9] to-[#fff1f2] border-2 border-rose-300 rounded-2xl p-6 sm:p-9 shadow-xl">
+                    <div class="flex items-center justify-between border-b border-rose-200 pb-3 mb-5">
+                        <span class="font-script text-3xl sm:text-4xl text-rose-700">Dear Mistri,</span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-3 py-1 rounded-full">Please Forgive Me 🥺</span>
+                    </div>
+
+                    <p class="font-serif italic text-lg sm:text-xl text-plum leading-relaxed">
+                        "Dear Mistri, gussa thoda kam karo na... Tumhari narazgi bilkul acchi nahi lagti. Ek choti si smile de do aur batao kab milna hai treat ke liye?"
+                    </p>
+
+                    <div class="mt-6 pt-4 border-t border-rose-200/70 flex items-center justify-between">
+                        <p class="font-script text-2xl sm:text-3xl font-bold text-rose-700">
+                            — Tumhara hi, hamesha. 💖
+                        </p>
+                        <button onclick="foldNote()" class="text-xs font-semibold text-plum/60 hover:text-plum underline cursor-pointer">
+                            Fold Note
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- The Classic Playful Interactive Question Section -->
+            <section id="questionSection" class="blush-card rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden">
+                <h3 class="font-serif text-2xl sm:text-4xl font-bold text-plum mb-2">
+                    Toh ab batao... Maan gayi na? 🥺💖
+                </h3>
+                <p id="pleaSubtext" class="text-plum/75 text-sm sm:text-base mb-8">
+                    Dil se pooch raha hoon, ab toh gussa chhod do!
+                </p>
+
+                <!-- Playful Arena for Yes & Dodging No Button -->
+                <div id="buttonArena" class="relative min-h-[150px] sm:min-h-[130px] flex flex-col sm:flex-row items-center justify-center gap-5 px-4">
+                    <!-- Glowing Rose-Gold YES Button -->
+                    <button 
+                        id="yesBtn"
+                        onclick="acceptApology()"
+                        class="z-20 px-8 py-4 rounded-full bg-gradient-to-r from-rose-600 via-pink-500 to-amber-500 text-white font-bold text-base sm:text-lg shadow-xl shadow-rose-500/35 hover:scale-110 active:scale-95 transition-transform cursor-pointer border-2 border-amber-200"
+                    >
+                        Haan, Maan Gayi! 🥰
+                    </button>
+
+                    <!-- Playful Dodging NO Button -->
+                    <button 
+                        id="noBtn"
+                        onmouseenter="dodgeNoButton()"
+                        onclick="dodgeNoButton()"
+                        class="z-10 px-6 py-3.5 rounded-full bg-white/95 hover:bg-rose-50 text-plum font-semibold text-sm sm:text-base border-2 border-rose-200 shadow-md cursor-pointer select-none"
+                    >
+                        Nahi, Abhi Bhi Gussa Hoon 😤
+                    </button>
+                </div>
+            </section>
+
+            <!-- Celebratory "Yayyy! Thank You Mistri!" Card (Revealed on YES) -->
+            <section id="celebrationSuccessCard" class="hidden blush-card rounded-3xl p-7 sm:p-10 text-center border-2 border-rose-400 bg-gradient-to-br from-white via-rose-50 to-amber-50 shadow-2xl">
+                <div class="text-5xl sm:text-6xl mb-3 animate-cute-bounce">🥰🎉💖</div>
+                <h3 class="font-serif text-3xl sm:text-5xl font-bold rose-gold-text mb-3">
+                    Yayyy! Thank You Mistri! 🎉💖
+                </h3>
+                <p class="text-plum/90 text-base sm:text-lg max-w-lg mx-auto leading-relaxed mb-6">
+                    Best decision ever! Ab jaldi se batao kab milna hai tumhari <span class="font-bold text-rose-700" id="finalTreatSummary">ice cream & momos</span> treat ke liye! 🍦🍫✨
+                </p>
+
+                <!-- Shareable / Screenshot Confirmation Badge -->
+                <div class="max-w-md mx-auto p-5 rounded-2xl bg-gradient-to-r from-rose-600 via-pink-600 to-plum text-white shadow-xl border-2 border-amber-300 mb-6">
+                    <p class="text-xs uppercase tracking-widest text-amber-200 font-bold mb-1">Official Peace Treaty Badge 🕊️</p>
+                    <p class="font-script text-3xl sm:text-4xl text-white my-1">Gussa Officially Cancelled!</p>
+                    <p class="text-xs sm:text-sm text-rose-100 mt-1">
+                        Signed with a smile by <span class="font-bold underline">Mistri</span> • Treat Unlocked 🍦✨
+                    </p>
+                </div>
+
+                <!-- Copy Confirmation Message Button -->
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <button onclick="copyTreatMessage()" class="px-6 py-3 rounded-full bg-plum hover:bg-rose-700 text-white font-bold text-sm shadow-lg transition cursor-pointer inline-flex items-center gap-2">
+                        <span>📋</span>
+                        <span id="copyBtnLabel">Copy "Maan Gayi" Reply to Send</span>
+                    </button>
+                    <button onclick="triggerHeartCelebration()" class="px-5 py-3 rounded-full bg-rose-100 hover:bg-rose-200 text-rose-800 font-bold text-sm transition cursor-pointer">
+                        More Hearts 💖
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Bottom Floating 4-Tab Pill Navigation -->
+    <nav aria-label="Apology Pages Bottom" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-[96%] max-w-2xl">
+        <div class="bg-white/90 backdrop-blur-xl p-1.5 rounded-full border-2 border-rose-200 shadow-2xl grid grid-cols-4 gap-1">
+            <button id="bot-nav-1" onclick="switchPage(1)" class="py-2.5 px-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all duration-200 bg-gradient-to-r from-rose-600 to-pink-500 text-white shadow cursor-pointer truncate">
+                1. Mistri Suno Na
+            </button>
+            <button id="bot-nav-2" onclick="switchPage(2)" class="py-2.5 px-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all duration-200 text-plum/80 hover:bg-rose-50 cursor-pointer truncate">
+                2. Sorry & Reasons
+            </button>
+            <button id="bot-nav-3" onclick="switchPage(3)" class="py-2.5 px-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all duration-200 text-plum/80 hover:bg-rose-50 cursor-pointer truncate">
+                3. Little Promises
+            </button>
+            <button id="bot-nav-4" onclick="switchPage(4)" class="py-2.5 px-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all duration-200 text-plum/80 hover:bg-rose-50 cursor-pointer truncate">
+                4. Maan Jao Na
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        /* -----------------------------------------------------------
+           1. 4-PAGE NAVIGATION CONTROLLER
+        ----------------------------------------------------------- */
+        function switchPage(pageNum) {
+            document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById(`page-${pageNum}`);
+            if (target) target.classList.add('active');
+
+            for (let i = 1; i <= 4; i++) {
+                const topBtn = document.getElementById(`top-nav-${i}`);
+                const botBtn = document.getElementById(`bot-nav-${i}`);
+
+                if (i === pageNum) {
+                    if (topBtn) topBtn.className = "px-3.5 py-1.5 rounded-full text-xs lg:text-sm font-semibold transition-all duration-200 bg-gradient-to-r from-rose-600 to-pink-500 text-white shadow cursor-pointer";
+                    if (botBtn) botBtn.className = "py-2.5 px-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all duration-200 bg-gradient-to-r from-rose-600 to-pink-500 text-white shadow cursor-pointer truncate";
+                } else {
+                    if (topBtn) topBtn.className = "px-3.5 py-1.5 rounded-full text-xs lg:text-sm font-semibold transition-all duration-200 text-plum/75 hover:text-rose-600 cursor-pointer";
+                    if (botBtn) botBtn.className = "py-2.5 px-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all duration-200 text-plum/80 hover:bg-rose-50 cursor-pointer truncate";
+                }
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* -----------------------------------------------------------
+           2. AMBIENT FLOATING HEARTS GENERATOR
+        ----------------------------------------------------------- */
+        function spawnAmbientHearts() {
+            const container = document.getElementById('ambientLayer');
+            const symbols = ['💖', '🌸', '✨', '🤍', '💕'];
+            for (let i = 0; i < 16; i++) {
+                const el = document.createElement('span');
+                el.className = 'ambient-heart text-base sm:text-lg opacity-50';
+                el.textContent = symbols[i % symbols.length];
+                el.style.left = `${Math.random() * 96}%`;
+                el.style.animationDuration = `${11 + Math.random() * 10}s`;
+                el.style.animationDelay = `${Math.random() * 10}s`;
+                container.appendChild(el);
+            }
+        }
+
+        /* -----------------------------------------------------------
+           3. PAGE 1: INTERACTIVE CURRENT NARAZGI (ANGER) METER
+        ----------------------------------------------------------- */
+        const moodStates = [
+            {
+                emoji: "😤",
+                title: "100% Gussa Mode On!",
+                text: "\"Haye! Itna tez gussa bhi cute lagta hai, par please thoda sa toh pighal jao na Mistri... I'm genuinely sorry! 🥺\""
+            },
+            {
+                emoji: "🫠",
+                title: "Thoda Sa Pighal Gayi...",
+                text: "\"Dekha! Mujhe pata tha tumhara dil bohot soft hai. Bas aise hi thoda aur muskura do please! ✨\""
+            },
+            {
+                emoji: "🤔",
+                title: "Chalo Sochte Hain...",
+                text: "\"Sochne mein kya rakha hai? Ek ice cream treat aur saare nakhre maaf—deal pakki karein? 🍦🤞\""
+            },
+            {
+                emoji: "😊",
+                title: "Maan Gayi! Best News Ever!",
+                text: "\"Yayyy! Tumhari yeh smile dekh kar din ban gaya! Aage ke pages bhi zaroor dekho, tumhare liye special coupons hain! 💖\""
+            }
+        ];
+
+        function setMood(index) {
+            const state = moodStates[index];
+            document.getElementById('moodEmoji').textContent = state.emoji;
+            document.getElementById('moodTitle').textContent = state.title;
+            document.getElementById('moodResponse').textContent = state.text;
+
+            document.querySelectorAll('.mood-btn').forEach((btn, idx) => {
+                if (idx === index) {
+                    btn.className = "mood-btn p-3.5 rounded-2xl border-2 border-rose-500 bg-rose-50 text-plum font-bold text-sm shadow-sm transition cursor-pointer flex items-center justify-center gap-2";
+                } else {
+                    btn.className = "mood-btn p-3.5 rounded-2xl border-2 border-rose-200 bg-white/80 hover:border-rose-400 text-plum font-semibold text-sm transition cursor-pointer flex items-center justify-center gap-2";
+                }
+            });
+
+            if (index === 3) {
+                confetti({
+                    particleCount: 45,
+                    spread: 60,
+                    origin: { y: 0.65 },
+                    colors: ['#e11d48', '#f59e0b', '#f472b6', '#a855f7']
+                });
+            }
+        }
+
+        /* -----------------------------------------------------------
+           4. PAGE 3: INTERACTIVE PEACE OFFERING COUPONS
+        ----------------------------------------------------------- */
+        const claimedSet = new Set();
+
+        function toggleCoupon(cardEl, index) {
+            const checkCircle = cardEl.querySelector('.coupon-check');
+            const stamp = cardEl.querySelector('.coupon-stamp');
+
+            if (claimedSet.has(index)) {
+                claimedSet.delete(index);
+                cardEl.classList.remove('claimed');
+                checkCircle.classList.remove('bg-rose-600', 'border-rose-600');
+                checkCircle.classList.add('border-rose-300');
+                stamp.classList.add('hidden');
+            } else {
+                claimedSet.add(index);
+                cardEl.classList.add('claimed');
+                checkCircle.classList.add('bg-rose-600', 'border-rose-600');
+                checkCircle.classList.remove('border-rose-300');
+                stamp.classList.remove('hidden');
+
+                confetti({
+                    particleCount: 28,
+                    spread: 50,
+                    origin: { y: 0.65 },
+                    colors: ['#e11d48', '#f59e0b', '#fb7185']
+                });
+            }
+
+            const count = claimedSet.size;
+            document.getElementById('treatCounterText').textContent = `${count}/4 Treats Claimed by Mistri`;
+            if (count > 0) {
+                document.getElementById('finalTreatSummary').textContent = `${count} claimed treat${count > 1 ? 's' : ''}`;
+            }
+        }
+
+        /* -----------------------------------------------------------
+           5. PAGE 4: ENVELOPE UNSEAL & DODGING "NO" BUTTON
+        ----------------------------------------------------------- */
+        function unsealNote() {
+            document.getElementById('sealedEnvelope').classList.add('hidden');
+            document.getElementById('unfoldedLetter').classList.remove('hidden');
+            document.getElementById('envelopeInstruction').textContent = "Dil se likha hai sirf tumhare liye 💌";
+        }
+
+        function foldNote() {
+            document.getElementById('unfoldedLetter').classList.add('hidden');
+            document.getElementById('sealedEnvelope').classList.remove('hidden');
+            document.getElementById('envelopeInstruction').textContent = "Tap the wax seal below to open your personal note 💌";
+        }
+
+        const cutePleas = [
+            "Are pakka? 🥺",
+            "Itna bhi kya gussa? 🍫",
+            "Ice cream bhi khilaunga! 🍦",
+            "Accha baba sorry na! 🙏",
+            "Click Haan please! ✨"
+        ];
+        let dodgeCount = 0;
+
+        function dodgeNoButton() {
+            const noBtn = document.getElementById('noBtn');
+            const pleaText = cutePleas[dodgeCount % cutePleas.length];
+            noBtn.textContent = pleaText;
+            dodgeCount++;
+
+            // Gentle bounded dodge within safe container offsets
+            const offsetX = (Math.random() > 0.5 ? 1 : -1) * (28 + Math.random() * 52);
+            const offsetY = (Math.random() > 0.5 ? 1 : -1) * (12 + Math.random() * 24);
+            noBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+
+            // Slightly grow the Yes button each time to encourage clicking it
+            const yesBtn = document.getElementById('yesBtn');
+            const scale = Math.min(1 + dodgeCount * 0.04, 1.24);
+            yesBtn.style.transform = `scale(${scale})`;
+        }
+
+        function acceptApology() {
+            document.getElementById('questionSection').classList.add('hidden');
+            document.getElementById('celebrationSuccessCard').classList.remove('hidden');
+            playSoftChime();
+            triggerHeartCelebration();
+        }
+
+        function triggerHeartCelebration() {
+            const colors = ['#e11d48', '#f43f5e', '#f59e0b', '#ec4899', '#a855f7'];
+            confetti({
+                particleCount: 85,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: colors
+            });
+            setTimeout(() => {
+                confetti({ particleCount: 50, angle: 60, spread: 60, origin: { x: 0, y: 0.7 }, colors });
+                confetti({ particleCount: 50, angle: 120, spread: 60, origin: { x: 1, y: 0.7 }, colors });
+            }, 250);
+        }
+
+        function copyTreatMessage() {
+            const count = claimedSet.size;
+            const text = `Accha baba maan gayi! 😊💖 Ab jaldi se meri ${count > 0 ? count + ' claimed treats' : 'ice cream & momos treat'} ready rakho! 🍦🍫✨`;
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            const label = document.getElementById('copyBtnLabel');
+            label.textContent = "Copied! Ab WhatsApp pe bhej do 💌";
+            setTimeout(() => {
+                label.textContent = "Copy \"Maan Gayi\" Reply to Send";
+            }, 3000);
+        }
+
+        /* -----------------------------------------------------------
+           6. WEB AUDIO API GENTLE ROMANTIC CHIME
+        ----------------------------------------------------------- */
+        let audioCtx = null;
+
+        function playSoftChime() {
+            try {
+                if (!audioCtx) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    audioCtx = new AudioContextClass();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const now = audioCtx.currentTime;
+                const notes = [
+                    { freq: 523.25, time: 0.00, dur: 0.35 }, // C5
+                    { freq: 659.25, time: 0.22, dur: 0.35 }, // E5
+                    { freq: 783.99, time: 0.44, dur: 0.45 }, // G5
+                    { freq: 1046.50, time: 0.70, dur: 0.85 } // C6
+                ];
+
+                notes.forEach(n => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(n.freq, now + n.time);
+
+                    gain.gain.setValueAtTime(0.001, now + n.time);
+                    gain.gain.exponentialRampToValueAtTime(0.14, now + n.time + 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + n.time + n.dur);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(now + n.time);
+                    osc.stop(now + n.time + n.dur + 0.05);
+                });
+            } catch (e) {}
+        }
+
+        window.onload = function () {
+            spawnAmbientHearts();
+        };
+    </script>
+</body>
+</html>
