@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mistri, Maan Jao Na... 🥺✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6584;
+            --primary-dark: #e04f6d;
+            --secondary: #9c88ff;
+            --accent: #ffd32a;
+            --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #2d3436;
+            --text-light: #636e72;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --border-radius: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff0f3 0%, #f3e7e8 50%, #e8e4f3 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating background decoration */
+        .floating-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .float-item {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.25;
+            animation: floatUp 12s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.3; }
+            80% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Navigation Header */
+        header {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .logo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        .nav-dots {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #dcdde1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(255, 101, 132, 0.5);
+        }
+
+        /* Main Container */
+        .container {
+            width: 100%;
+            max-width: 750px;
+            padding: 10px 20px 80px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Page System */
+        .page {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.5s ease forwards;
+            text-align: center;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards & Containers */
+        .card-box {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #d63031;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #2d3436;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* PAGE 1: Narazgi Meter */
+        .mood-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .mood-btn {
+            background: white;
+            border: 2px solid #ff7675;
+            padding: 15px;
+            border-radius: 15px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #d63031;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .mood-btn:hover, .mood-btn.selected {
+            background: #ff7675;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 118, 117, 0.3);
+        }
+
+        .reaction-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            border-left: 5px solid var(--primary);
+            font-style: italic;
+            color: #4b6584;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* PAGE 2: Flip Cards */
+        .flip-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 160px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, #fff 0%, #fff5f7 100%);
+            color: var(--text-main);
+        }
+
+        .flip-card-front span {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .flip-card-front h3 {
+            font-size: 16px;
+            color: var(--primary-dark);
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--primary) 0%, #ff8da1 100%);
+            color: white;
